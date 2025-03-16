@@ -8,8 +8,9 @@
 <body>
     <div class="container">
         <h1>Login System using HTMX,Golang with Postgresql</h1>
+        <div id="message-area"></div>
 
-        <form hx-post="/register">
+        <form hx-post="/register" hx-target="#message-area" hx-swap="innerHTML">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -26,7 +27,7 @@
             <button type="submit">Register</button>
         </form>
 
-        <p>Already have an account? <a href="/login">Login</a></p>
+        <p>Already have an account? <a href="/index">Login</a></p>
     </div>
 </body>
 </html>

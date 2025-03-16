@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome page</title>
+    <title>Dashboard</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Hello, {{ .Username }} </h1>
+        <p>You have successfully logged in to this page.</p>
+
+        <form action="/logout">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -10,8 +10,10 @@
 <body>
     <div class="container">
         <h1>Login System using HTMX,Golang with Postgresql</h1>
+        <div id="message-area"></div>
 
-        <form hx-post="/login">
+
+        <form hx-post="/index" hx-target="#message-area" hx-swap="innerHTML">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" name="username" id="username" required>
