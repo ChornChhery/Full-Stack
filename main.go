@@ -128,7 +128,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	// http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
 // Handle Regitser page
@@ -143,6 +143,16 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		tmpl.Execute(w, nil)
 		return
 	}
+
+	if r.Method == http.MethodPost {
+		//Parse the form first
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, "Invalid form data", http.StatusBadRequest)
+			return
+		}
+	}
+
 	if r.Method == http.MethodPost {
 		//process register form
 		username := r.FormValue("username")
@@ -180,7 +190,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		//Insert new user
-		_, err = db.Exec("INSERT INTO users (username,password) VALUES ($1,$2)", username, hashedPassword)
+		_, err = db.Exec("INSERT INTO users (username,password) VALUES ($1, $2)", username, hashedPassword)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -211,7 +221,7 @@ func dashboardhandler(w http.ResponseWriter, r *http.Request) {
 
 	// Get user ID from cookie
 	var userID int
-	fmt.Sscanf(cookie.Value, "%d", userID)
+	fmt.Sscanf(cookie.Value, "%d", &userID)
 
 	// Get username from database
 	var username string
@@ -267,8 +277,9 @@ func main() {
 	initDB()
 	fmt.Println("Hello")
 
-	//Set up static file server
-	// fs:= http.FileServer(http.Dir("static"))
+	// Set up style file server
+	fs := http.FileServer(http.Dir("style"))
+	http.Handle("/style/", http.StripPrefix("/style/", fs))
 
 	//Set up routes
 	http.HandleFunc("/", homeHandler)

@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="">
-
+    <link rel="stylesheet" href="./style/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h1>Login System using HTMX,Golang with Postgresql</h1>
         <div id="message-area"></div>
-
 
         <form hx-post="/index" hx-target="#message-area" hx-swap="innerHTML">
             <div class="form-group">
